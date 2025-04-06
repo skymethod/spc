@@ -43,17 +43,52 @@ Podcasters (or their hosting companies) can then parse these app-specific endpoi
 
 ## Standard response payloads
 
-For each podcast requested in the query:
+At a high-level, every API response is standard UTF-8 JSON, consisting of the a metrics result (or error) for each podcast specified in the query.  The standard metrics are defined as:
 
-Show-level follower count: "how many people are following this show" ie Apple Podcast followers, Overcast subscribers, etc
+- Show-level follower[^1] count: "how many people are following this show" ie Apple Podcast followers, Overcast subscribers, etc
 
-Show-level all-time total listener count
+- Show-level all-time total listener[^2] count
 
-Episode-level daily listener count, where a listener is defined as a single person (across devices) that plays at least 60 seconds of the episode in the 24-hr period
+- Episode-level daily listener[^2] count
 
-Episode-level all-time total listener count
+- Episode-level all-time total listener[^2] count
 
-Episode retention histograms, expressed as a resolution (e.g. 1m) and an array of per-resolution percentages
+- Episode-level listener histograms, expressed as a segment resolution (e.g. `1m`) and an array of per-resolution percentages of how many listeners listened to that segment
+
+[^1]: a _follower_ is defined as a single person, across devices, that has indicated interest in receiving special notifications/autodownloads of new episodes for a given show
+
+[^2]: a _listener_ is defined as a single person (across devices) that plays at least 60 seconds of an episode
+
+Example:
+
+Podcaster/hosting company request:
+
+`GET https://api.examplecast.com/spc?q=5f71780061794eaa9e6c62fc967cb363`
+
+Podcast api endpoint response:
+```jsonc
+{
+  "results": {
+    "5f71780061794eaa9e6c62fc967cb363": {
+      "followerCount": 1234,
+      "totalListeners": 25340,
+      "asof": "2025-04-06T17:46:29.476Z",
+      "episodes": {
+        "episode-guid-10": {
+          "totalListeners": 12345,
+          "listenerHistogramResolution": "1m", // optional: default is '1m'
+          "listenerHistogram": [ 100, 90.5, 90.43, 90.43, ... ]  // for every minute of the episode
+        },
+        "episode-guid-9": {
+          "totalListeners": 18220,
+          "listenerHistogram": [ 100, 90.4, 89,5, 72.3, ... ]  // for every minute of the episode
+        },
+        //...(more episodes)
+      }
+    }
+  }
+}
+```
 
 TODO others?
 
