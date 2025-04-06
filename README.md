@@ -145,7 +145,7 @@ At a high-level, every spc API response is a standard UTF-8 encoded JSON object,
 }
 ```
 
-All response payloads use the same format for simplicity.  The fields are described in examples above, and also more formally as a [JSON Schema](/spc.schema.json) or [Typescript type definition](/spc.d.ts).
+All response payloads use the same format.  The fields are described in the examples above, and also more formally as a [JSON Schema](/spc.schema.json) and [Typescript type definition](/spc.d.ts).
 
 All metrics are encouraged, but optional.  Leave any unimplemented/uncollected metrics out of the associated show-level or episode-level portions of the response.
 
