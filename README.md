@@ -9,7 +9,7 @@ Some podcast player apps keep track of various metrics happening on their app fo
 
 While one-off app-specific portals are useful, they each define and report information in [slightly different and incompatible ways](https://wearebumper.com/blog/one-big-number-how-to-combine-audio-video-podcast-data-across-apple-spotify-and-youtube), and require the podcaster to log into each platform or set up an unsupported custom integration based on scraping the portal content.
 
-**Since podcasting is based on open standards, there should be a simple and uniform way for podcast apps to securely provide aggregate client-side metrics for each show back to podcasters.**
+_Since podcasting is based on open standards, there should be a simple and uniform way for podcast apps to securely provide aggregate client-side metrics for each show back to the podcasters that are powering their app's experience._
 
 ## What
 
@@ -22,7 +22,7 @@ It's called **Standard Podcast Consumption**, or **spc**
 
 ## How
 
-The mechanism is simple, inspired by what the popular podcast app [Overcast already does today](https://overcast.fm/podcasterinfo), namely including podcast-specific information _inside_ the HTTP [user-agent](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/User-Agent) request header when the app's backend server fetches the feed.
+The mechanism is simple, inspired by what the popular podcast app [Overcast already does today](https://overcast.fm/podcasterinfo), namely including podcast-specific information _inside_ the HTTP [user-agent](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/User-Agent) request header when the app's backend server fetches the podcast RSS feed.
 
 This elegant approach neatly solves the problem without needing complicated auth schemes.  The information is transferred server-to-server, ensuring the information is seen only by the podcaster (or the podcaster's hosting company), and never includes any given podcast listener in the call flow - avoiding accidental listener IP leakage.  It also requires no new outgoing fetch calls for every podcast, reusing the standard feed-level call that the app already makes.
 
@@ -161,4 +161,4 @@ Not in the sense that anyone can see them by default, that should remain the cho
 
 #### Where will this standard live once adopted? ####
 
-This standard probably makes sense to live under a group organization, like the [OPAWG](https://github.com/opawg).  I'd be willing to donate it there, this idea is freely available!
+This standard probably makes sense to live under a group or organization, like the [OPAWG](https://github.com/opawg).  I'd be willing to donate it there, this idea is freely available!
