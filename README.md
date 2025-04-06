@@ -40,7 +40,7 @@ Podcasters (or their hosting companies) can then parse these app-specific endpoi
 
 ## Standard responses
 
-At a high-level, every spc API response is a standard UTF-8 encoded JSON object, consisting of the a metrics result (or error) for every podcast specified in the query.  The standard podcast consumption metrics are defined as:
+At a high-level, every spc API response is a standard UTF-8 encoded JSON object, consisting of a metrics result (or error) for every podcast specified in the query.  The standard podcast consumption metrics are defined as:
 
 - Show-level follower[^1] count: "how many people are following this show" ie Apple Podcast followers, Overcast subscribers, etc
 
