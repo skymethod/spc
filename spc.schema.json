@@ -1,0 +1,38 @@
+{
+    "$id": "https://github.com/skymethod/spc",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "description": "JSON Schema for a Standard Podcast Consumption api query response",
+    "type": "object",
+    "oneOf": [
+        {
+            "$ref": "#/$defs/resultsResponse"
+        },
+        {
+            "$ref": "#/$defs/commonError"
+        }
+    ],
+    "$defs": {
+        "resultsResponse": {
+            "type": "object",
+            "required": [
+                "results"
+            ],
+            "properties": {
+                "results": {
+                    "type": "object"
+                }
+            }
+        },
+        "commonError": {
+            "type": "object",
+            "required": [
+                "error"
+            ],
+            "properties": {
+                "error": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

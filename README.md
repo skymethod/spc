@@ -69,7 +69,7 @@ At a high-level, every API response is standard UTF-8 JSON, consisting of the a 
 {
   "results": {
     "5f71780061794eaa9e6c62fc967cb363": {
-      "asOf": "2025-04-06T17:46:29.476Z",
+      "asOf": "2025-04-06T17:46:29.476Z", // utc timestamp at which this data is considered comprehensive
       "followerCount": 1234,
       "totalListeners": 25340,
       "episodes": {
