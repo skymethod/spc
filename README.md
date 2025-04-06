@@ -38,6 +38,9 @@ To implement **spc**, here's what a podcast app needs to do:
 
 Podcasters (or their hosting companies) can then parse these app-specific endpoints out of their logs and use them to query consumption metrics on an ongoing basis.
 
+> [!NOTE]
+> This requires no feed-level changes on the server side, so can be incrementally adopted whenever is convenient for the app - no need to wait for podcast publishers to change their feed generation.
+
 ## Standard response payloads
 
 For each podcast requested in the query:
@@ -58,8 +61,16 @@ TODO describe standard JSON payload format with examples
 
 ## FAQ
 
-_Do these numbers mean "downloads" are obsolete?_
+#### Do these numbers mean "downloads" are obsolete? ####
 
 Not at all, these client-side metrics are self-reported by each app and should always been sanity-checked against the corresponding downloads.  They are _in addition to_, not _a replacement of_ the traditional download-based metrics, and should always be displayed to the podcasters in separate charts - as to avoid comparing apples and oranges.
+
+#### Does this mean these numbers will be public? ####
+
+Not in the sense that anyone can see them by default, that should remain the choice of the podcaster.  Although the api endpoint is public in the http sense, keystrings should be unguessable and long enough to compat enumeration attacks.  Once received by the podcaster, they are free to share them with other services they use as they wish.
+
+#### Where will this standard live once adopted? ####
+
+This standard probably makes sense to live under a larger organization, like the [OPAWG](https://github.com/opawg).  I'd be willing to donate it there.
 
 TODO others?
