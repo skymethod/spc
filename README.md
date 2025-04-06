@@ -32,7 +32,7 @@ To implement **spc**, here's what a podcast app needs to do:
 - Create a new api server https endpoint hosted on a domain associated with the app
   - must respond to GET requests, with one or more `q` query params (keystrings), returning a standardized JSON results payload (see below)
 - Include the podcast-specific endpoint url, prefixed by `spc/` anywhere inside the user-agent when server-fetching a podcast's feed.
-  - Example: an app called ExampleCast might send the following user-agent when server-fetching a feed for a podcast with associated keystring `5f71780061794eaa9e6c62fc967cb363`
+  - An app called ExampleCast might send the following user-agent when server-fetching a feed for a podcast with associated keystring `5f71780061794eaa9e6c62fc967cb363`
 
 > `ExampleCast/1.0.1 spc/https://api.examplecast.com/spc?q=5f71780061794eaa9e6c62fc967cb363`
 
@@ -63,11 +63,11 @@ TODO describe standard JSON payload format with examples
 
 #### Do these numbers mean "downloads" are obsolete? ####
 
-Not at all, these client-side metrics are self-reported by each app and should always been sanity-checked against the corresponding downloads.  They are _in addition to_, not _a replacement of_ the traditional download-based metrics, and should always be displayed to the podcasters in separate charts - as to avoid comparing apples and oranges.
+Not at all, these client-side metrics are self-reported by each app and should always be sanity-checked against the corresponding downloads.  They are _in addition to_, not _a replacement of_ the traditional download-based metrics, and should always be displayed to podcasters in separate charts - as to avoid comparing apples and oranges.
 
 #### Does this mean these numbers will be public? ####
 
-Not in the sense that anyone can see them by default, that should remain the choice of the podcaster.  Although the api endpoint is public in the http sense, keystrings should be unguessable and long enough to compat enumeration attacks.  Once received by the podcaster, they are free to share them with other services they use as they wish.
+Not in the sense that anyone can see them by default, that should remain the choice of the podcaster.  Although the api endpoint is public in the http sense, keystrings should be unguessable and long enough to combat enumeration attacks.  Once received by the podcaster, they are free to share them with other services they use as needed.
 
 #### Where will this standard live once adopted? ####
 
