@@ -9,7 +9,7 @@ Some podcast player apps keep track of various metrics happening on their app fo
 
 While one-off app-specific portals are useful, they each define and report information in [slightly different and incompatible ways](https://wearebumper.com/blog/one-big-number-how-to-combine-audio-video-podcast-data-across-apple-spotify-and-youtube), and require the podcaster to log into each platform or set up an unsupported custom integration based on scraping the portal content.
 
-> Since podcasting is based on open standards, there should be a simple and uniform way for podcast apps to securely provide aggregate client-side metrics for each show back to podcasters.
+**Since podcasting is based on open standards, there should be a simple and uniform way for podcast apps to securely provide aggregate client-side metrics for each show back to podcasters.**
 
 ## What
 
