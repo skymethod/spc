@@ -15,7 +15,8 @@ Since podcasting is based on open standards, there should be a simple and unifor
 
 This document describes a simple, standard mechanism that any podcast app can use to securely provide these client-side metrics back to each podcaster.
 
-> Importantly, these are _aggregate_ metrics at the show/episode level, _not_ at the listener level.  This is not a new [RAD](https://www.npr.org/sections/npr-extra/2018/12/11/675250553/remote-audio-data-is-here), no listener IP address or proxies, just sums. In most cases, implementation may not prompt a change to app's published policies at all, since this is aggregate information that is likely already being collected.
+> [!IMPORTANT]
+> These are _aggregate_ metrics at the show/episode level, _not_ at the listener level.  This is not a new [RAD](https://www.npr.org/sections/npr-extra/2018/12/11/675250553/remote-audio-data-is-here), no listener IP address or proxies, just sums. In most cases, implementation may not prompt a change to an app's published policies at all, since this is aggregate information that is likely already being collected.
 
 It's called **Standard Podcast Consumption**, or **spc**
 
@@ -33,7 +34,7 @@ To implement **spc**, here's what a podcast app needs to do:
 - Include the podcast-specific endpoint url, prefixed by `spc/` anywhere inside the user-agent when server-fetching a podcast's feed.
   - Example: an app called ExampleCast might send the following user-agent when server-fetching a feed for a podcast with associated keystring `5f71780061794eaa9e6c62fc967cb363`
 
-> `user-agent: ExampleCast/1.0.1 spc/https://api.examplecast.com/spc?q=5f71780061794eaa9e6c62fc967cb363`
+> `ExampleCast/1.0.1 spc/https://api.examplecast.com/spc?q=5f71780061794eaa9e6c62fc967cb363`
 
 Podcasters (or their hosting companies) can then parse these app-specific endpoints out of their logs and use them to query consumption metrics on an ongoing basis.
 
