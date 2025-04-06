@@ -22,13 +22,12 @@ It's called **Standard Podcast Consumption**, or **spc**
 
 ## How
 
-The mechanism is simple, inspired by what the popular podcast app [Overcast already does today](https://overcast.fm/podcasterinfo), namely including podcast-specific information _inside_ the HTTP user-agent request header when the app's backend server fetches the feed.
+The mechanism is simple, inspired by what the popular podcast app [Overcast already does today](https://overcast.fm/podcasterinfo), namely including podcast-specific information _inside_ the HTTP [user-agent](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/User-Agent) request header when the app's backend server fetches the feed.
 
-This elegant approach neatly solves the problem without needing complicated auth schemes.  The information is transferred server-to-server, ensuring the information is seen only by the podcaster (or the podcaster's hosting company), and never includes any given podcast listener in the call flow - avoiding any accidental listener IP leakage.  It also requires no new outgoing fetch calls for every podcast, reusing the standard feed-level call that the app already makes.
+This elegant approach neatly solves the problem without needing complicated auth schemes.  The information is transferred server-to-server, ensuring the information is seen only by the podcaster (or the podcaster's hosting company), and never includes any given podcast listener in the call flow - avoiding accidental listener IP leakage.  It also requires no new outgoing fetch calls for every podcast, reusing the standard feed-level call that the app already makes.
 
 To implement **spc**, here's what a podcast app needs to do:
-- Generate a short, unique, unguessable **keystring** (case-sensitive and alpha-numeric only) for each podcast that has reportable client consumption metrics
-  - Example: a random v4 uuid without the dashes, perhaps stored as a new column in the backend `podcast` database table
+- Generate a short, unique, unguessable **keystring** (case-sensitive and alpha-numeric only) for each podcast that has reportable client consumption metrics. e.g. a random v4 uuid without the dashes, perhaps stored as a new column in the backend `podcast` database table
 - Create and implement a new spc API endpoint, hosted on a domain associated with the app.  This HTTPS endpoint must respond to `GET` requests, with one or more `q` query params (keystrings), returning a standardized JSON response payload ([see below](#standard-responses)) for the associated podcasts.
 - Include the podcast-specific endpoint url, prefixed by `spc/`, anywhere inside the user-agent header when server-fetching a podcast's feed. An app called ExampleCast might send the following user-agent when server-fetching a feed for a podcast with associated keystring `5f71780061794eaa9e6c62fc967cb363`:
 
@@ -41,7 +40,7 @@ Podcasters (or their hosting companies) can then parse these app-specific endpoi
 
 ## Standard responses
 
-At a high-level, every spc API response is standard UTF-8 encoded JSON, consisting of the a metrics result (or error) for every podcast specified in the query.  The standard podcast consumption metrics are defined as:
+At a high-level, every spc API response is a standard UTF-8 encoded JSON object, consisting of the a metrics result (or error) for every podcast specified in the query.  The standard podcast consumption metrics are defined as:
 
 - Show-level follower[^1] count: "how many people are following this show" ie Apple Podcast followers, Overcast subscribers, etc
 
@@ -61,7 +60,7 @@ At a high-level, every spc API response is standard UTF-8 encoded JSON, consisti
 
 `GET https://api.examplecast.com/spc?q=5f71780061794eaa9e6c62fc967cb363`
 
-**Example podcast app api endpoint response:**
+**Example podcast app spc API endpoint response:**
 ```jsonc
 // HTTP 200
 {
@@ -97,7 +96,7 @@ At a high-level, every spc API response is standard UTF-8 encoded JSON, consisti
 }
 ```
 
-**Batch requests are possible by passing multiple keystrings for the same app api endpoint:**
+**Batch requests are possible by passing multiple keystrings for the same scp API endpoint:**
 
 `GET https://api.examplecast.com/spc?q=5f71780061794eaa9e6c62fc967cb363&q=93141cf56f7f4cf8a6eddcd519cd34e3`
 
@@ -127,7 +126,7 @@ At a high-level, every spc API response is standard UTF-8 encoded JSON, consisti
 }
 ```
 
-**...or at the result level for partial successes to batch queries.**
+**...or at the result level for partial successes to batch queries:**
 
 `GET https://api.examplecast.com/spc?q=5f71780061794eaa9e6c62fc967cb363&q=93141cf56f7f4cf8a6eddcd519cd34eX`
 
@@ -148,7 +147,7 @@ At a high-level, every spc API response is standard UTF-8 encoded JSON, consisti
 
 All response payloads use the same format for simplicity.  The fields are described in examples above, and also more formally as a [JSON Schema](/spc.schema.json) or [Typescript type definition](/spc.d.ts).
 
-All metrics are optional, leave any unimplemented/uncollected metrics out of the associated show-level or episode-level portions of the response.
+All metrics are encouraged, but optional.  Leave any unimplemented/uncollected metrics out of the associated show-level or episode-level portions of the response.
 
 ## FAQ
 
