@@ -53,7 +53,7 @@ At a high-level, every API response is standard UTF-8 JSON, consisting of the a 
 
 - Episode-level all-time total listener[^2] count
 
-- Episode-level listener histograms, expressed as a segment resolution (e.g. `1m`) and an array of per-resolution percentages of how many listeners listened to that segment
+- Episode-level listener[^2] histogram, expressed as a segment resolution (e.g. `1m`) and an array of per-resolution percentages of how many listeners listened to that segment
 
 [^1]: a _follower_ is defined as a single person, across devices, that has indicated interest in receiving special notifications/autodownloads of new episodes for a given show
 
@@ -77,11 +77,11 @@ Podcast api endpoint response:
         "episode-guid-10": {
           "totalListeners": 12345,
           "listenerHistogramResolution": "1m", // optional: default is '1m'
-          "listenerHistogram": [ 100, 90.5, 90.43, 90.43, ... ]  // for every minute of the episode
+          "listenerHistogram": [ 100, 90.5, 90.43, 90.43, /** ... for every minute of the episode */ ]
         },
         "episode-guid-9": {
           "totalListeners": 18220,
-          "listenerHistogram": [ 100, 90.4, 89,5, 72.3, ... ]  // for every minute of the episode
+          "listenerHistogram": [ 100, 90.4, 89,5, 72.3, /** ... for every minute of the episode */ ]
         },
         //...(more episodes)
       }
