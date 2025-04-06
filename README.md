@@ -148,6 +148,10 @@ At a high-level, every API response is standard UTF-8 JSON, consisting of the a 
 }
 ```
 
+All response payloads use the same format for simplicity.  The fields are described in examples above, and also more formally as a [JSON Schema](/scp.schema.json) or [Typescript type definition](/scp.d.ts).
+
+All metrics are optional, leave any unimplemented/uncollected metrics out of the associated show-level or episode-level portions of the response.
+
 ## FAQ
 
 #### Do these numbers mean "downloads" are obsolete? ####
@@ -156,8 +160,8 @@ Not at all, these client-side metrics are self-reported by each app and should a
 
 #### Does this mean these numbers will be public? ####
 
-Not in the sense that anyone can see them by default, that should remain the choice of the podcaster.  Although the api endpoint is public in the http sense, keystrings should be unguessable and long enough to combat enumeration attacks.  Once received by the podcaster, they are free to share them with other services they use as needed.
+Not in the sense that anyone can see them by default, that should remain the choice of the podcaster.  Although the api endpoint is public in the http sense, keystrings should be unguessable and long enough to combat enumeration attacks.  This is similar to how "private feeds" are implemented today.  Once the spc url is received by the podcaster, they are free to share it with other services used for stats aggregation and display.
 
 #### Where will this standard live once adopted? ####
 
-This standard probably makes sense to live under a larger organization, like the [OPAWG](https://github.com/opawg).  I'd be willing to donate it there.
+This standard probably makes sense to live under a larger organization, like the [OPAWG](https://github.com/opawg).  I'd be willing to donate it there, this idea is freely available!
