@@ -96,7 +96,7 @@ At a high-level, every spc API response is a standard UTF-8 encoded JSON object,
 }
 ```
 
-**Batch requests are possible by passing multiple keystrings for the same scp API endpoint:**
+**Batch requests are possible by passing multiple keystrings for the same spc API endpoint:**
 
 `GET https://api.examplecast.com/spc?q=5f71780061794eaa9e6c62fc967cb363&q=93141cf56f7f4cf8a6eddcd519cd34e3`
 
