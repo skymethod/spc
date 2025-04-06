@@ -70,18 +70,28 @@ Podcast api endpoint response:
 {
   "results": {
     "5f71780061794eaa9e6c62fc967cb363": {
+      "asof": "2025-04-06T17:46:29.476Z",
       "followerCount": 1234,
       "totalListeners": 25340,
-      "asof": "2025-04-06T17:46:29.476Z",
       "episodes": {
         "episode-guid-10": {
           "totalListeners": 12345,
           "listenerHistogramResolution": "1m", // optional: default is '1m'
-          "listenerHistogram": [ 100, 90.5, 90.43, 90.43, /** ... for every minute of the episode */ ]
+          "listenerHistogram": [ 100, 90.5, 90.43, 90.43, /** ... for every minute of the episode */ ],
+          "dailyListeners": {
+            "2025-04-01": 1002,
+            "2025-04-02": 920,
+            "2025-04-02": 432,
+            "2025-04-03": 200,
+            "2025-04-04": 102
+          }
         },
         "episode-guid-9": {
           "totalListeners": 18220,
-          "listenerHistogram": [ 100, 90.4, 89,5, 72.3, /** ... for every minute of the episode */ ]
+          "listenerHistogram": [ 100, 90.4, 89,5, 72.3, /** ... for every minute of the episode */ ],
+          "dailyListeners": {
+            // ...
+          }
         },
         //...(more episodes)
       }
