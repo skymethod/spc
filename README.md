@@ -22,14 +22,14 @@ It's called **Standard Podcast Consumption**, or **spc**
 
 ## How
 
-The mechanism is simple, inspired by what the popular podcast app [Overcast already does today](https://overcast.fm/podcasterinfo), namely including podcast-specific information _inside_ the http user-agent request header when the app's backend server fetches the feed.
+The mechanism is simple, inspired by what the popular podcast app [Overcast already does today](https://overcast.fm/podcasterinfo), namely including podcast-specific information _inside_ the HTTP user-agent request header when the app's backend server fetches the feed.
 
 This elegant approach neatly solves the problem without needing complicated auth schemes.  The information is transferred server-to-server, ensuring the information is seen only by the podcaster (or the podcaster's hosting company), and never includes any given podcast listener in the call flow - avoiding any accidental listener IP leakage.  It also requires no new outgoing fetch calls for every podcast, reusing the standard feed-level call that the app already makes.
 
 To implement **spc**, here's what a podcast app needs to do:
 - Generate a short, unique, unguessable **keystring** (case-sensitive and alpha-numeric only) for each podcast that has reportable client consumption metrics
   - Example: a random v4 uuid without the dashes, perhaps stored as a new column in the backend `podcast` database table
-- Create a new api server https endpoint hosted on a domain associated with the app
+- Create a new api server HTTPS endpoint hosted on a domain associated with the app
   - must respond to GET requests, with one or more `q` query params (keystrings), returning a standardized JSON query results payload ([see below](#standard-responses))
 - Include the podcast-specific endpoint url, prefixed by `spc/` anywhere inside the user-agent when server-fetching a podcast's feed.
   - An app called ExampleCast might send the following user-agent when server-fetching a feed for a podcast with associated keystring `5f71780061794eaa9e6c62fc967cb363`
@@ -148,7 +148,7 @@ At a high-level, every API response is standard UTF-8 JSON, consisting of the a 
 }
 ```
 
-All response payloads use the same format for simplicity.  The fields are described in examples above, and also more formally as a [JSON Schema](/scp.schema.json) or [Typescript type definition](/scp.d.ts).
+All response payloads use the same format for simplicity.  The fields are described in examples above, and also more formally as a [JSON Schema](/spc.schema.json) or [Typescript type definition](/spc.d.ts).
 
 All metrics are optional, leave any unimplemented/uncollected metrics out of the associated show-level or episode-level portions of the response.
 
@@ -160,7 +160,7 @@ Not at all, these client-side metrics are self-reported by each app and should a
 
 #### Does this mean these numbers will be public? ####
 
-Not in the sense that anyone can see them by default, that should remain the choice of the podcaster.  Although the api endpoint is public in the http sense, keystrings should be unguessable and long enough to combat enumeration attacks.  This is similar to how "private feeds" are implemented today.  Once the spc url is received by the podcaster, they are free to share it with other services used for stats aggregation and display.
+Not in the sense that anyone can see them by default, that should remain the choice of the podcaster.  Although the api endpoint is public in the HTTP sense, keystrings should be unguessable and long enough to combat enumeration attacks.  This is similar to how "private feeds" are implemented today.  Once the spc url is received by the podcaster, they are free to share it with other services used for stats aggregation and display.
 
 #### Where will this standard live once adopted? ####
 
