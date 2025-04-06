@@ -24,7 +24,7 @@ It's called **Standard Podcast Consumption**, or **spc**
 
 The mechanism is simple, inspired by what the popular podcast app [Overcast already does today](https://overcast.fm/podcasterinfo), namely including podcast-specific information _inside_ the http user-agent request header when the app's backend server fetches the feed.
 
-This elegant approach is not only simple for both sides, but neatly solves the problem without needing complicated auth schemes.  The information is transferred server-to-server, ensuring the information is seen only by the podcaster (or the podcaster's hosting company), and never includes any given podcast listener in the call flow - avoiding any accidental listener IP leakage.  It also requires no new outgoing fetch calls for every podcast, reusing the standard feed-level call that the app already makes.
+This elegant approach neatly solves the problem without needing complicated auth schemes.  The information is transferred server-to-server, ensuring the information is seen only by the podcaster (or the podcaster's hosting company), and never includes any given podcast listener in the call flow - avoiding any accidental listener IP leakage.  It also requires no new outgoing fetch calls for every podcast, reusing the standard feed-level call that the app already makes.
 
 To implement **spc**, here's what a podcast app needs to do:
 - Generate a short, unique, unguessable **keystring** (case-sensitive and alpha-numeric only) for each podcast that has reportable client consumption metrics
