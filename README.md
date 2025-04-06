@@ -30,7 +30,7 @@ To implement **spc**, here's what a podcast app needs to do:
 - Generate a short, unique, unguessable **keystring** (case-sensitive and alpha-numeric only) for each podcast that has reportable client consumption metrics
   - Example: a random v4 uuid without the dashes, perhaps stored as a new column in the backend `podcast` database table
 - Create a new api server https endpoint hosted on a domain associated with the app
-  - must respond to GET requests, with one or more `q` query params (keystrings), returning a standardized JSON results payload (see below)
+  - must respond to GET requests, with one or more `q` query params (keystrings), returning a standardized JSON query results payload ([see below](#standard-responses))
 - Include the podcast-specific endpoint url, prefixed by `spc/` anywhere inside the user-agent when server-fetching a podcast's feed.
   - An app called ExampleCast might send the following user-agent when server-fetching a feed for a podcast with associated keystring `5f71780061794eaa9e6c62fc967cb363`
 
@@ -41,9 +41,9 @@ Podcasters (or their hosting companies) can then parse these app-specific endpoi
 > [!NOTE]
 > This requires no feed-level changes on the server side, so can be incrementally adopted whenever is convenient for the app - no need to wait for podcast publishers to change their feed generation.
 
-## Standard response payloads
+## Standard responses
 
-At a high-level, every API response is standard UTF-8 JSON, consisting of the a metrics result (or error) for each podcast specified in the query.  The standard metrics are defined as:
+At a high-level, every API response is standard UTF-8 JSON, consisting of the a metrics result (or error) for each podcast specified in the query.  The standard podcast consumption metrics are defined as:
 
 - Show-level follower[^1] count: "how many people are following this show" ie Apple Podcast followers, Overcast subscribers, etc
 
@@ -59,18 +59,17 @@ At a high-level, every API response is standard UTF-8 JSON, consisting of the a 
 
 [^2]: a _listener_ is defined as a single person (across devices) that plays at least 60 seconds of an episode
 
-Example:
-
-Podcaster/hosting company request:
+**Example podcaster/hosting company request:**
 
 `GET https://api.examplecast.com/spc?q=5f71780061794eaa9e6c62fc967cb363`
 
-Podcast api endpoint response:
+**Example podcast app api endpoint response:**
 ```jsonc
+// HTTP 200
 {
   "results": {
     "5f71780061794eaa9e6c62fc967cb363": {
-      "asof": "2025-04-06T17:46:29.476Z",
+      "asOf": "2025-04-06T17:46:29.476Z",
       "followerCount": 1234,
       "totalListeners": 25340,
       "episodes": {
@@ -100,9 +99,54 @@ Podcast api endpoint response:
 }
 ```
 
-TODO others?
+**Batch requests are possible by passing multiple keystrings for the same app api endpoint:**
 
-TODO describe standard JSON payload format with examples
+`GET https://api.examplecast.com/spc?q=5f71780061794eaa9e6c62fc967cb363&q=93141cf56f7f4cf8a6eddcd519cd34e3`
+
+```jsonc
+// HTTP 200
+{
+  "results": {
+    "5f71780061794eaa9e6c62fc967cb363": {
+      "asOf": "2025-04-06T17:46:29.476Z",
+      // ... rest of result
+    },
+    "93141cf56f7f4cf8a6eddcd519cd34e3": {
+      "asOf": "2025-04-06T20:11:37.743Z",
+      // ... rest of result
+    }
+  }
+}
+```
+**Errors are returned using the 'error' property, and can be defined at the overall response-level for fatal problems...**
+
+`GET https://api.examplecast.com/spc?q=`
+
+```jsonc
+// HTTP 400
+{
+  "error": "Invalid query"
+}
+```
+
+**...or at the result level for partial successes to batch queries.**
+
+`GET https://api.examplecast.com/spc?q=5f71780061794eaa9e6c62fc967cb363&q=93141cf56f7f4cf8a6eddcd519cd34eX`
+
+```jsonc
+// HTTP 200 (or 207 for extra credit)
+{
+  "results": {
+    "5f71780061794eaa9e6c62fc967cb363": {
+      "asOf": "2025-04-06T17:46:29.476Z",
+      // ... rest of result
+    },
+    "93141cf56f7f4cf8a6eddcd519cd34eX": {
+      "error": "Unknown keystring"
+    }
+  }
+}
+```
 
 ## FAQ
 
@@ -117,5 +161,3 @@ Not in the sense that anyone can see them by default, that should remain the cho
 #### Where will this standard live once adopted? ####
 
 This standard probably makes sense to live under a larger organization, like the [OPAWG](https://github.com/opawg).  I'd be willing to donate it there.
-
-TODO others?
