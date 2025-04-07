@@ -39,6 +39,7 @@ Podcasters (or their hosting companies) can then parse these app-specific endpoi
 > This requires no feed-level changes on the server side, so can be incrementally adopted whenever is convenient for the app - no need to wait for podcast publishers to change their feed generation, and no need for podcast publishers to change their feeds at all.
 
 ![spc-diagram](https://github.com/user-attachments/assets/7fcb9d15-359c-481d-9262-0d9cf73f85a1)
+<p align=center><i>New pieces needed to implement SPC (in red) vs existing infrastructure (gray)</i></p>
 
 ## Standard responses
 
