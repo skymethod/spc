@@ -160,7 +160,7 @@ Not at all, these client-side metrics are self-reported by each app and should a
 
 #### Does this mean these numbers will be public? ####
 
-Not in the sense that anyone can see them by default, that should remain the choice of the podcaster.  Although the API endpoint is public in the HTTP sense, keystrings should be unguessable and long enough to combat enumeration attacks.  This is similar to how "private feeds" are implemented in podcast-land today.  Once the spc API url is received by the podcaster, they are free to share it with other services used for stats aggregation and display.  Any existing service that receives log delivery will have access to these automatically.
+Not in the sense that anyone can see them by default, that should remain the choice of the podcaster.  Although the API endpoint is public in the HTTP sense, keystrings should be unguessable and long enough to combat enumeration attacks.  This is similar to how "private feeds" are implemented in podcast-land today.  Once the spc API url is received by the podcaster, they are free to share it with other services used for stats aggregation and display.
 
 #### Where will this standard live once adopted? ####
 
