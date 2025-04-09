@@ -29,7 +29,7 @@ This elegant approach neatly solves the problem without needing complicated auth
 To implement **spc**, here's what a podcast app needs to do:
 - Generate a short, unique, unguessable **keystring** (case-sensitive and alpha-numeric only) for each podcast that has reportable client consumption metrics. e.g. a [random v4 uuid](https://guid.new/) without the dashes, perhaps stored as a new column in the backend `podcast` database table
 - Create and implement a new spc API endpoint, hosted on a domain associated with the app.  This HTTPS endpoint must respond to `GET` requests, with one or more `q` query params (keystrings), returning a standardized JSON response payload ([see below](#standard-responses)) for the associated podcasts.
-- Include the podcast-specific endpoint url, prefixed by `spc/`, anywhere inside the user-agent header when server-fetching a podcast's feed. An app called ExampleCast might send the following user-agent when server-fetching a feed for a podcast with associated keystring `5f71780061794eaa9e6c62fc967cb363`:
+- Include the podcast-specific endpoint url, prefixed by `spc/`, anywhere inside the user-agent header when server-fetching a podcast’s RSS feed. An app called ExampleCast might send the following user-agent when server-fetching a feed for a podcast with associated keystring `5f71780061794eaa9e6c62fc967cb363`:
 
 > `ExampleCast/1.0.1 spc/https://api.examplecast.com/spc?q=5f71780061794eaa9e6c62fc967cb363`
 
