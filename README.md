@@ -45,19 +45,19 @@ Podcasters (or their hosting companies) can then parse these app-specific endpoi
 
 At a high-level, every SPC API response is a standard UTF-8 encoded JSON object, consisting of a metrics result (or error) for every podcast specified in the query.  The standard podcast consumption metrics are defined as:
 
-- Show-level follower[^1] count: "how many people are following this show" ie Apple Podcast followers, Overcast subscribers, etc
+- Show-level follower[¹](#follower-def) count: "how many people are following this show" ie Apple Podcast followers, Overcast subscribers, etc
 
-- Show-level all-time total listener[^2] count
+- Show-level all-time total listener² count
 
-- Episode-level daily listener[^2] count
+- Episode-level daily listener[²](#listener-def) count
 
-- Episode-level all-time total listener[^2] count
+- Episode-level all-time total listener[²](#listener-def) count
 
-- Episode-level listener[^2] histogram, expressed as a segment resolution (e.g. `1m`) and an array of per-resolution percentages of how many listeners listened to that segment
+- Episode-level listener[²](#listener-def) histogram, expressed as a segment resolution (e.g. `1m`) and an array of per-resolution percentages of how many listeners listened to that segment
 
-[^1]: a _follower_ is defined as a single person, across devices, that has indicated interest in receiving special notifications/autodownloads of new episodes for a given show
+<a name="follower-def">[1]</a> a _follower_ is defined as a single person, across devices, that has indicated interest in receiving special notifications/autodownloads of new episodes for a given show
 
-[^2]: a _listener_ is defined as a single person (across devices) that plays more than zero seconds of an episode
+<a name="listener-def">[2]</a> a _listener_ is defined as a single person (across devices) that plays more than zero seconds of an episode
 
 **Example podcaster/hosting company request:**
 
@@ -169,4 +169,4 @@ This standard probably makes sense to live under a group or organization, like t
 
 ## Get involved
 
-If you work on a podcast app, and are planning on implementing SPC, leave a note over in the [discussion area](https://github.com/skymethod/spc/discussions) and I'll keep a list of supporting apps below.
+If you work on a podcast app, and are planning on implementing SPC, leave a note over in the [discussion area](https://github.com/skymethod/spc/discussions) and I'll keep a list of supporting apps on this page.
