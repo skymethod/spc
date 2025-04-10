@@ -165,3 +165,8 @@ Not in the sense that anyone can see them by default, that should remain the cho
 #### Where will this standard live once adopted? ####
 
 This standard probably makes sense to live under a group or organization, like the [OPAWG](https://github.com/opawg).  I'd be willing to donate it there, this idea is freely available!
+
+
+## Get involved
+
+If you work on a podcast app, and are planning on implementing SPC, leave a note over in the [discussion area](https://github.com/skymethod/spc/discussions) and I'll keep a list of supporting apps below.
