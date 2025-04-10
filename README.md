@@ -18,18 +18,18 @@ This document describes a simple, standard mechanism that any podcast app can us
 > [!IMPORTANT]
 > These are _aggregate_ metrics at the show/episode level, _not_ at the listener level.  This is not a new [RAD](https://www.npr.org/sections/npr-extra/2018/12/11/675250553/remote-audio-data-is-here), no listener IP address or proxies, just sums. In most cases, implementing this standard won't even require a change to an app's published policies whatsoever, since this aggregate information is likely already being collected and disclosed.
 
-It's called **Standard Podcast Consumption**, or **SPC**
+It's called **Standard Podcast Consumption**, or **SPC**, and can be implemented by podcast apps of any size.
 
 ## How
 
-The mechanism is simple, inspired by what the popular podcast app [Overcast already does today](https://overcast.fm/podcasterinfo), namely including podcast-specific information _inside_ the HTTP [user-agent](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/User-Agent) request header when the app's backend server fetches the podcast RSS feed.
+The mechanism is simple, inspired by what the popular podcast app [Overcast already does today](https://overcast.fm/podcasterinfo), namely: include podcast-specific information _inside_ the HTTP [user-agent](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/User-Agent) request header when the app's backend server fetches the podcast RSS feed.  _But instead of one metric (followers), a podcast-specific url to call back._
 
 This elegant approach neatly solves the problem without needing complicated auth schemes.  The information is transferred server-to-server, ensuring the information is seen only by the podcaster (or the podcaster's hosting company), and never includes any given podcast listener in the call flow - avoiding accidental listener IP leakage.  It also does not require the app to make thousands of new outgoing fetch calls for every podcast, instead reusing the standard feed-level call that the app already makes.
 
 To implement **SPC**, a podcast app needs to do three new things:
-- Generate a short, unique, unguessable **keystring** (case-sensitive and alpha-numeric only) for each podcast that has reportable client consumption metrics. e.g. a [random v4 uuid](https://guid.new/) without the dashes, perhaps stored as a new column in the backend `podcast` database table
-- Create and implement a new SPC API endpoint, hosted on a domain associated with the app.  This simple HTTPS endpoint must respond to `GET` requests, with one or more `q` query params (keystrings), returning a standardized JSON response payload ([see below](#standard-responses)) for the associated podcasts.
-- Include the podcast-specific endpoint url, prefixed by `SPC/`, anywhere inside the user-agent header when server-fetching a podcast’s RSS feed. An app called ExampleCast might send the following user-agent when server-fetching a feed for a podcast with associated keystring `5f71780061794eaa9e6c62fc967cb363`:
+- Generate a podcast-specific, short, unique, unguessable **keystring** (case-sensitive and alpha-numeric only) for each podcast that has reportable client consumption metrics. A [random v4 uuid](https://guid.new/) without the dashes is a good choice, perhaps stored as a new column in the backend `podcast` database table
+- Create and implement a new SPC API endpoint, hosted on a domain associated with the app.  This simple HTTPS endpoint must respond to `GET` requests, with one or more `q` query params (keystrings), returning a standardized JSON response payload ([see below](#standard-responses)) with metrics for the associated podcasts.
+- Include the podcast-specific endpoint url, prefixed by `SPC/`, anywhere inside the `user-agent` header when server-fetching a podcast’s RSS feed. An app called ExampleCast might send the following `user-agent` when server-fetching a feed for a podcast with associated keystring `5f71780061794eaa9e6c62fc967cb363`:
 
 > `ExampleCast/1.0.1 SPC/https://api.examplecast.com/spc?q=5f71780061794eaa9e6c62fc967cb363`
 
@@ -41,7 +41,7 @@ Podcasters (or their hosting companies) can then parse these app-specific endpoi
 ![spc-diagram](https://github.com/user-attachments/assets/e37d996e-24ad-4fcc-b91e-c09ab6b1114b)
 <p align="center"><i>New pieces needed to implement <b>SPC</b> (in red) vs existing infrastructure (gray)</i></p>
 
-## Standard responses
+## Standard SPC API responses
 
 At a high-level, every SPC API response is a standard UTF-8 encoded JSON object, consisting of a metrics result (or error) for every podcast specified in the query.  The standard podcast consumption metrics are defined as:
 
