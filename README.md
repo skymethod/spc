@@ -47,7 +47,7 @@ At a high-level, every SPC API response is a standard UTF-8 encoded JSON object,
 
 - Show-level follower[¹](#follower-def) count: "how many people are following this show" ie Apple Podcast followers, Overcast subscribers, etc
 
-- Show-level all-time total listener² count
+- Show-level all-time total listener[²](#listener-def) count
 
 - Episode-level daily listener[²](#listener-def) count
 
@@ -58,6 +58,8 @@ At a high-level, every SPC API response is a standard UTF-8 encoded JSON object,
 <a name="follower-def">[1]</a> a _follower_ is defined as a single person, across devices, that has indicated interest in receiving special notifications/autodownloads of new episodes for a given show
 
 <a name="listener-def">[2]</a> a _listener_ is defined as a single person (across devices) that plays more than zero seconds of an episode
+
+<hr>
 
 **Example podcaster/hosting company request:**
 
