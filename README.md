@@ -57,7 +57,7 @@ At a high-level, every spc API response is a standard UTF-8 encoded JSON object,
 
 [^1]: a _follower_ is defined as a single person, across devices, that has indicated interest in receiving special notifications/autodownloads of new episodes for a given show
 
-[^2]: a _listener_ is defined as a single person (across devices) that plays at least 60 seconds of an episode
+[^2]: a _listener_ is defined as a single person (across devices) that plays more than zero seconds of an episode
 
 **Example podcaster/hosting company request:**
 
