@@ -16,7 +16,7 @@ _Since podcasting is based on open standards, there should be a simple and unifo
 This document describes a simple, standard mechanism that any podcast app can use to securely make these client-side metrics available to each podcaster.
 
 > [!IMPORTANT]
-> These are _aggregate_ metrics at the show/episode level, _not_ at the listener level.  This is not a new [RAD](https://www.npr.org/sections/npr-extra/2018/12/11/675250553/remote-audio-data-is-here), no listener IP address or proxies, just sums. In most cases, implementing this standard won't even require a change to an app's published policies whatsoever, since this aggregate information is likely already being collected and disclosed.
+> These are _aggregate_ metrics at the show/episode level, _not_ at the listener level.  This is not a new [RAD](https://www.npr.org/sections/npr-extra/2018/12/11/675250553/remote-audio-data-is-here), no listener IP addresses or proxies, just sums. In most cases, implementing this standard won't even require a change to an app's published policies whatsoever, since this aggregate information is likely already being collected and disclosed.
 
 It's called **Standard Podcast Consumption**, or **SPC**, and can be implemented by podcast apps of any size.
 
@@ -38,7 +38,7 @@ Podcasters (or their hosting companies) can then parse these app-specific endpoi
 > [!NOTE]
 > This requires no feed-level changes on the server side, so can be incrementally adopted whenever is convenient for the app - no need to wait for podcast publishers to change their feed generation, and no need for podcast publishers to change their feeds at all.  No new tags!
 
-![spc-diagram](https://github.com/user-attachments/assets/e37d996e-24ad-4fcc-b91e-c09ab6b1114b)
+![spc-diagram](https://github.com/user-attachments/assets/b11489ee-df78-4d92-b7e0-9f29b8d4f69c)
 <p align="center"><i>New pieces needed to implement <b>SPC</b> (in red) vs existing infrastructure (gray)</i></p>
 
 ## Standard SPC API responses
