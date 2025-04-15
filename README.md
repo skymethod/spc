@@ -38,7 +38,7 @@ Podcasters (or their hosting companies) can then parse these app-specific endpoi
 > [!NOTE]
 > This requires no feed-level changes on the server side, so can be incrementally adopted whenever is convenient for the app - no need to wait for podcast publishers to change their feed generation, and no need for podcast publishers to change their feeds at all.  No new tags!
 
-![spc-diagram](https://github.com/user-attachments/assets/b11489ee-df78-4d92-b7e0-9f29b8d4f69c)
+![spc-diagram](https://github.com/user-attachments/assets/3ba683d6-fd1b-408d-bb0b-1e2702e9d73c)
 <p align="center"><i>New pieces needed to implement <b>SPC</b> (in red) vs existing infrastructure (gray)</i></p>
 
 ## Standard SPC API responses
