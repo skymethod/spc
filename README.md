@@ -53,7 +53,7 @@ At a high-level, every SPC API response is a standard UTF-8 encoded JSON object,
 
 - Episode-level all-time total listener[²](#listener-def) count
 
-- Episode-level listener[²](#listener-def) histogram, expressed as a segment resolution (e.g. `1m`) and an array of per-resolution percentages of how many listeners listened to that segment
+- Episode-level listener[²](#listener-def) histogram, expressed as a segment resolution (e.g. 60 seconds) and an array of per-resolution percentages of how many listeners listened to that segment
 
 <a name="follower-def">[1]</a> a _follower_ is defined as a single person, across devices, that has indicated interest in receiving special notifications/autodownloads of new episodes for a given show
 
@@ -77,7 +77,7 @@ At a high-level, every SPC API response is a standard UTF-8 encoded JSON object,
       "episodes": {
         "episode-guid-10": {
           "totalListeners": 12345,
-          "listenerHistogramResolution": "1m", // optional: default is '1m'
+          "listenerHistogramResolutionSeconds": 60, // optional: default is 60, can specify higher-resolution (e.g. 30), but not lower (e.g. 120)
           "listenerHistogram": [ 100, 90.5, 90.43, 90.43, /** ... for every minute of the episode */ ],
           "dailyListeners": {
             "2025-04-01": 1002,

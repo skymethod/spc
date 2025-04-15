@@ -13,7 +13,7 @@ export type PodcastMetricsResult = {
 
 export type EpisodeMetricsResult = {
     totalListeners?: number, // non-negative integer
-    listenerHistogramResolution?: '1m' | '30s', // 1m is the default
+    listenerHistogramResolutionSeconds?: number, // default is 60, can specify higher-resolution (e.g. 30), but not lower (e.g. 120)
     listenerHistogram?: number[], // percentage floats from 0.0 (inclusive) to 100.0 inclusive, one for each minute if listenerHistogramResolution = '1m'
     dailyListeners?: Record<string /* utc-day (yyyy-mm-dd) */, number /* non-negative integer */>
 };
