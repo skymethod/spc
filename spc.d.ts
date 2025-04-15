@@ -1,7 +1,7 @@
 export type SpcQueryResponse = ResultsResponse | CommonError;
 
 export type ResultsResponse = {
-    results: Record<string /* keystring */, PodcastMetricsResult | CommonError>
+    results: Record<string /* podcast-level keystring */, PodcastMetricsResult | CommonError>
 };
 
 export type PodcastMetricsResult = {

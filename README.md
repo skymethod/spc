@@ -28,10 +28,10 @@ This elegant approach neatly solves the problem without needing complicated auth
 
 To implement **SPC**, a podcast app needs to do three new things:
 - Generate a podcast-specific, short, unique, unguessable **keystring** (case-sensitive and alpha-numeric only) for each podcast that has reportable client consumption metrics. A [random v4 uuid](https://guid.new/) without the dashes is a good choice, perhaps stored as a new column in the backend `podcast` database table
-- Create and implement a new SPC API endpoint, hosted on a domain associated with the app.  This simple HTTPS endpoint must respond to `GET` requests, with one or more `q` query params (keystrings), returning a standardized JSON response payload ([see below](#standard-responses)) with metrics for the associated podcasts.
+- Create and implement a new SPC API endpoint, hosted on a domain associated with the app.  This simple HTTPS endpoint must respond to `GET` requests, with one or more `p` query params (podcast-level keystrings), returning a standardized JSON response payload ([see below](#standard-responses)) with metrics for the associated podcasts.
 - Include the podcast-specific endpoint url, prefixed by `SPC/`, anywhere inside the `user-agent` header when server-fetching a podcast’s RSS feed. An app called ExampleCast might send the following `user-agent` when server-fetching a feed for a podcast with associated keystring `5f71780061794eaa9e6c62fc967cb363`:
 
-> `ExampleCast/1.0.1 SPC/https://api.examplecast.com/spc?q=5f71780061794eaa9e6c62fc967cb363`
+> `ExampleCast/1.0.1 SPC/https://api.examplecast.com/spc?p=5f71780061794eaa9e6c62fc967cb363`
 
 Podcasters (or their hosting companies) can then parse these app-specific endpoints out of their logs and use them to query consumption metrics on an ongoing basis.
 
@@ -63,7 +63,7 @@ At a high-level, every SPC API response is a standard UTF-8 encoded JSON object,
 
 **Example podcaster/hosting company request:**
 
-`GET https://api.examplecast.com/spc?q=5f71780061794eaa9e6c62fc967cb363`
+`GET https://api.examplecast.com/spc?p=5f71780061794eaa9e6c62fc967cb363`
 
 **Example podcast app SPC API endpoint response:**
 ```jsonc
@@ -103,7 +103,7 @@ At a high-level, every SPC API response is a standard UTF-8 encoded JSON object,
 
 **Batch requests are possible by passing multiple keystrings for the same SPC API endpoint:**
 
-`GET https://api.examplecast.com/spc?q=5f71780061794eaa9e6c62fc967cb363&q=93141cf56f7f4cf8a6eddcd519cd34e3`
+`GET https://api.examplecast.com/spc?p=5f71780061794eaa9e6c62fc967cb363&p=93141cf56f7f4cf8a6eddcd519cd34e3`
 
 ```jsonc
 // HTTP 200
@@ -111,18 +111,18 @@ At a high-level, every SPC API response is a standard UTF-8 encoded JSON object,
   "results": {
     "5f71780061794eaa9e6c62fc967cb363": {
       "asOf": "2025-04-06T17:46:29.476Z",
-      // ... rest of result
+      // ... rest of result for podcast 1
     },
     "93141cf56f7f4cf8a6eddcd519cd34e3": {
       "asOf": "2025-04-06T20:11:37.743Z",
-      // ... rest of result
+      // ... rest of result for podcast 2
     }
   }
 }
 ```
 **Errors are returned using the 'error' property, and can be defined at the overall response-level for fatal problems...**
 
-`GET https://api.examplecast.com/spc?q=`
+`GET https://api.examplecast.com/spc?p=`
 
 ```jsonc
 // HTTP 400
@@ -133,7 +133,7 @@ At a high-level, every SPC API response is a standard UTF-8 encoded JSON object,
 
 **...or at the result level for partial successes to batch queries:**
 
-`GET https://api.examplecast.com/spc?q=5f71780061794eaa9e6c62fc967cb363&q=93141cf56f7f4cf8a6eddcd519cd34eX`
+`GET https://api.examplecast.com/spc?p=5f71780061794eaa9e6c62fc967cb363&p=93141cf56f7f4cf8a6eddcd519cd34eX`
 
 ```jsonc
 // HTTP 200 (or 207 for extra credit)
